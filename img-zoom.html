@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>img zoom simples</title>
+
+    <style>
+        .imagens {
+            display: flex;
+            justify-content: center;
+        }
+
+        .imagens img {
+            width: 200px;
+            height: auto;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 767px) {
+            .imagens {
+                flex-direction: column;
+            }
+
+            .imagens img {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+
+        /* ↓CSS ZOOM IMG↓ */
+        .modal-img {
+            display: none;
+            place-items: center;
+            position: fixed;
+            z-index: 99;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-img .img-ampliada {
+            width: 60%;
+            animation: .6s ease 0s 1 zoom-img;
+        }
+
+        @media (max-width: 768px) {
+            .modal-img .img-ampliada {
+                width: 90%;
+            }
+        }
+
+        @keyframes zoom-img {
+            from {
+                transform: scale(0);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+        /* ↑CSS ZOOM IMG↑ */
+    </style>
+</head>
+
+<body>
+    <p>img zoom simples</p>
+    <p>css grid centralizar</p>
+
+    <div class="imagens">
+        <img src="img/01.jpg" alt="imagem 01" title="imagem 01" class="img-zoom">
+        <img src="img/02.jpg" alt="imagem 02" title="imagem 02" class="img-zoom">
+        <img src="img/03.jpg" alt="imagem 03" title="imagem 03" class="img-zoom">
+    </div>
+
+    <div class="modal-img" onclick="this.style.display='none'">
+        <img class="img-ampliada">
+    </div>
+
+
+    <script>
+        let imgZoom = document.querySelectorAll(".img-zoom");
+
+        function imageZoom() {
+            document.querySelector(".modal-img").style.display = "grid";
+            document.querySelector(".img-ampliada").src = this.src;
+        }
+        imgZoom.forEach(iz => iz.addEventListener('click', imageZoom));
+    </script>
+
+</body>
+
+</html>
