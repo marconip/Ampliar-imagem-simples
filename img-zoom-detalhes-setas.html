@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>img zoom detalhes</title>
+
+    <style>
+        .imagens {
+            display: flex;
+            justify-content: center;
+        }
+
+        .imagens img {
+            width: 200px;
+            height: auto;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 767px) {
+            .imagens {
+                flex-direction: column;
+            }
+
+            .imagens img {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+
+        /* ↓CSS ZOOM IMG↓ */
+        .modal-img {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            z-index: 99;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-img .img-ampliada {
+            width: 60%;
+            animation: .6s ease 0s 1 zoom-img;
+        }
+
+        @media (max-width: 768px) {
+            .modal-img .img-ampliada {
+                width: 90%;
+            }
+        }
+
+        .img-caption {
+            color: #fff;
+            text-transform: uppercase;
+            margin: 10px;
+            animation: .6s ease 0s 1 zoom-img;
+        }
+
+        .close {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            width: 30px;
+            cursor: pointer;
+            animation: .6s ease 0s 1 zoom-img;
+        }
+
+        .close:hover {
+            filter: drop-shadow(0px 0px 3px red);
+        }
+
+        .esquerda,
+        .direita {
+            position: fixed;
+            top: 50%;
+            left: 40px;
+            margin-top: -40px;
+            width: 30px;
+            cursor: pointer;
+            filter: drop-shadow(0px 0px 3px black);
+            animation: .6s ease 0s 1 zoom-img;
+        }
+
+        .direita {
+            left: auto;
+            right: 40px;
+        }
+
+        .esquerda:hover,
+        .direita:hover {
+            filter: drop-shadow(0px 0px 3px red);
+        }
+
+        @keyframes zoom-img {
+            from {
+                transform: scale(0);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        /* ↑CSS ZOOM IMG↑ */
+    </style>
+</head>
+
+<body>
+
+    <p>img zoom com titulo e fechar no X</p>
+    <p>css sombra em imagem transparente</p>
+
+    <div class="imagens">
+        <img src="img/01.jpg" alt="imagem 01" title="imagem 01" class="img-zoom">
+        <img src="img/02.jpg" alt="imagem 02" title="imagem 02" class="img-zoom">
+        <img src="img/03.jpg" alt="imagem 03" title="imagem 03" class="img-zoom">
+    </div>
+
+    <div class="modal-img">
+        <img src="img/x-circle.svg" class="close">
+        <img src="img/left.svg" class="esquerda">
+        <img src="img/right.svg" class="direita">
+        <img class="img-ampliada">
+        <div class="img-caption"></div>
+    </div>
+
+
+    <script>
+        let imgZoom = document.querySelectorAll(".img-zoom");
+
+        function imageZoom() {
+            document.querySelector(".modal-img").style.display = "flex";
+            document.querySelector(".img-ampliada").src = this.src;
+            document.querySelector(".img-caption").innerHTML = this.title;
+        }
+        imgZoom.forEach(iz => iz.addEventListener('click', imageZoom));
+
+        document.querySelector(".close").onclick = function () {
+            document.querySelector(".modal-img").style.display = "none";
+        }
+
+        document.querySelector(".direita").onclick = function () {
+            document.querySelector(".img-ampliada").src = "img/03.jpg";
+            document.querySelector(".img-caption").innerHTML = "Marconi";
+        }
+
+
+        
+        var array = 1;
+        variaveis(array);
+        function btn(click) {
+            variaveis(array += click);
+        };
+
+        function variaveis(valorImg) {
+            var imgs = document.getElementsByClassName("mySlides");
+
+            if (valorImg > imgs.length) {
+                array = 1;
+            }
+            if (valorImg < 1) {
+                array = imgs.length;
+            }
+            for (i = 0; i < imgs.length; i++) {
+                imgs[i].style.display = "none";
+            }
+            imgs[array - 1].style.display = "block";
+        }
+    </script>
+
+</body>
+
+</html>
